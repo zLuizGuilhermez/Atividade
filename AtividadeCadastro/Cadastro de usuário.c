@@ -62,11 +62,11 @@ void listarTodos(cliente a[], int contador) {
         }
     }
 }
-void buscarCliente(cliente a[], int contador, int emailBusca){
-    for (int i = 0; i < contador; i++)
-    {
-        if (emailBusca == a[i].email)
-        {
+void buscarCliente(cliente a[], int contador, char emailBusca[]) {
+    int encontrado = 0; 
+
+    for (int i = 0; i < contador; i++) {
+        if (strcmp(emailBusca, a[i].email) == 0) {
             printf("\nNome: %s", a[i].nome);
             printf("\nAltura: %0.2f", a[i].altura);
             printf("\nEmail: %s", a[i].email);
@@ -75,12 +75,74 @@ void buscarCliente(cliente a[], int contador, int emailBusca){
             printf("\nID: %d", a[i].id);
             printf("\nSexo: %c", a[i].sexo);
             printf("\n");
-        }else{
-            printf("Email não encontrado");
+            encontrado = 1; 
+            break; 
         }
-        
     }
-    
+
+    if (!encontrado) {
+        printf("Email não encontrado\n");
+    }
+}
+void editarUsuario(cliente a[], int contador) {
+    int idEditar;
+
+    printf("Digite o ID do usuário a ser editado: ");
+    scanf("%d", &idEditar);
+
+    for (int i = 0; i < contador; i++) {
+        if (idEditar == a[i].id) {
+            printf("Digite o novo nome completo: ");
+            getchar(); 
+            fgets(a[i].nome, sizeof(a[i].nome), stdin);
+            a[i].nome[strcspn(a[i].nome, "\n")] = '\0';
+
+                printf("Digite o novo email: ");
+                fgets(a[i].email, sizeof(a[i].email), stdin);
+                a[i].email[strcspn(a[i].email, "\n")] = '\0';
+
+            printf("Digite o novo sexo (Feminino, Masculino ou Indiferente): ");
+            scanf(" %c", &a[i].sexo);
+
+
+            printf("Digite o novo endereço: ");
+            fgets(a[i].endereco, sizeof(a[i].endereco), stdin);
+            a[i].endereco[strcspn(a[i].endereco, "\n")] = '\0';
+
+                printf("Digite a nova altura (entre 1 e 2 metros): ");
+                scanf("%f", &a[i].altura);
+
+            printf("Situação da nova vacina (1 - sim, 0 - não): ");
+            scanf("%d", &a[i].vacina);
+
+            printf("\nUsuário editado com sucesso.\n");
+            break;
+        }
+    }
+ }
+ void excluirUsuario(cliente a[], int *contador) {
+    int idExcluir;
+    int encontrado = 0;
+
+    printf("Digite o ID do usuário a ser excluído: ");
+    scanf("%d", &idExcluir);
+
+    for (int i = 0; i < *contador; i++) {
+        if (idExcluir == a[i].id) {
+            for (int j = i; j < *contador - 1; j++) {
+                a[j] = a[j + 1];
+            }
+
+            (*contador)--;
+            printf("\nUsuário excluído com sucesso.\n");
+            encontrado = 1;
+            break;
+        }
+    }
+
+    if (!encontrado) {
+        printf("\nUsuário não encontrado.\n");
+    }
 }
 
 int main(){
@@ -105,12 +167,19 @@ int main(){
                 listarTodos(a, contador);
                 break;
             case 3:
-                printf("Deseja o email que quer buscar");
+                printf("Digite o email que quer buscar: ");
                 fgets(emailBusca, sizeof(emailBusca), stdin);
-emailBusca[strcspn(emailBusca, "\n")] = '\0';
+                emailBusca[strcspn(emailBusca, "\n")] = '\0';
                 limparBuffer();
+
                 buscarCliente(a, contador, emailBusca);
             break;
+            case 4:
+            excluirUsuario(a, &contador);
+            break;
+            case 5:
+                editarUsuario(a, contador);
+                break;
             default:
                 break;
         }
