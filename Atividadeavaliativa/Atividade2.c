@@ -65,9 +65,14 @@ void mostraClassifica(pessoa a[], int indice) {
         printf("\nNenhum dado cadastrado");
 
     } else {
+            
         for (int i = 0; i < indice; i++) {
             printf("\n\nNome: %s", a[i].nome);
-            printf("\nSexo: %c", a[i].sexo);
+            if (a[i].sexo == 'M'){
+                printf("\nSexo: Masculino");
+            }else{
+                printf("\nSexo: Feminino");
+            }
             printf("\nSalario: BRL %0.2f", a[i].salario);
             printf("\nSituacao salario: %s", a[i].qualifisa);
         }
