@@ -12,39 +12,36 @@ void classificaSalario(pessoa a[], int indice, int *salarioMaior, int *salarioMe
 
 void cadastrar(pessoa a[], int indice, int *salarioMaior, int *salarioMenor){
     int escolha = 0;
-    do {
         fflush(stdin);
         printf("\nDigite o nome do pessoa: ");
-        fflush(stdin);
         fgets(a[indice].nome, sizeof(a[indice].nome), stdin);
         a[indice].nome[strcspn(a[indice].nome, "\n")] = '\0';
         fflush(stdin);
-
+       do{
+        escolha = 0;
+        fflush(stdin);
         printf("Digite o seu salario: ");
         scanf("%f", &a[indice].salario);
         if (a[indice].salario <= 1) {
             printf("Deseja inserir novamente? 1 para sim, 0 para não: ");
             scanf("%d", &escolha);
-            if (escolha == 0) {
-                return;
-            }
+            fflush(stdin);
         }
+       }while(escolha != 0);
+       
         classificaSalario(a, indice, salarioMaior, salarioMenor);
-
+       do{
+        escolha = 0;
         printf("\nDigite o seu sexo (M ou F): ");
-        getchar();
-        fflush(stdin);  
         scanf(" %c", &a[indice].sexo);
         if (a[indice].sexo != 'M' && a[indice].sexo != 'F') {
             printf("Deseja inserir novamente? 1 para sim, 0 para não: ");
             scanf("%d", &escolha);
-            if (escolha == 0) {
-                return;
-            }
+            fflush(stdin);
         }
+    }while(escolha != 0);
 
-
-    } while (escolha != 0);
+   
 }
 
 void classificaSalario(pessoa a[], int indice, int *salarioMaior, int *salarioMenor) {
@@ -86,6 +83,7 @@ int main() {
     do {
         printf("\n\nDigite 1 para registrar\nDigite 2 para listar\n Digite 3 para mostrar as estatisticas dos salarios \nDigite 0 para sair: ");
         scanf("%d", &opcao);
+        getchar();
         switch (opcao) {
             case 1:
                 if (indice < MAX) {
