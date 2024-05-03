@@ -1,0 +1,299 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <locale.h>
+
+typedef struct _estoque{
+    char nomeProduto[50];
+    int codigoProduto;
+    int quantidadeEstoque;
+    double precoProduto;
+} Estoque;
+
+Estoque *criarProduto(char *nomeProduto, int codigo, int quantidade, float preco){
+    Estoque *u = calloc(1, sizeof(Estoque));
+    
+    strcpy(u->nomeProduto, nomeProduto);
+    u->codigoProduto = codigo;
+    u->quantidadeEstoque = quantidade;
+    u->precoProduto = preco;
+    
+    return u;
+    
+}
+
+void atualizarProduto(char *codigo, Estoque  **produtoUm, Estoque **produtoDois,Estoque **produtoTres,Estoque **produtoQuatro, int quantidade, double preco){
+	
+	if ((strcmp(codigo, (*produtoUm)->codigoProduto) == 0)){
+		(*produtoUm)->quantidadeEstoque = quantidade;
+		(*produtoUm)->precoProduto = preco;
+		
+	}else if(strcmp(codigo, (*produtoDois)->codigoProduto)== 0){
+	    (*produtoDois)->quantidadeEstoque = quantidade;
+		(*produtoDois)->precoProduto = preco;
+		
+	}else if(strcmp(codigo, (*produtoTres)->codigoProduto)== 0){
+	    (*produtoTres)->quantidadeEstoque = quantidade;
+		(*produtoTres)->precoProduto = preco;
+		
+	}else if(strcmp(codigo, (*produtoQuatro)->codigoProduto)== 0){
+	    (*produtoQuatro)->quantidadeEstoque = quantidade;
+		(*produtoQuatro)->precoProduto = preco;
+		
+	}
+	
+}
+
+void removerProduto(char *codigo, Estoque  **produtoUm, Estoque **produtoDois,Estoque **produtoTres,Estoque **produtoQuatro){
+	
+	if ((strcmp(codigo, (*produtoUm)->codigoProduto) == 0)){
+		Estoque *u = *produtoUm;
+		free(u);
+		*produtoUm = NULL;
+	}else if(strcmp(codigo, (*produtoDois)->codigoProduto)== 0){
+		Estoque *u = *produtoDois;
+		free(u);
+		*produtoDois = NULL;
+		
+	}else if(strcmp(codigo, (*produtoTres)->codigoProduto)== 0){
+		Estoque *u = *produtoTres;
+		free(u);
+		*produtoTres = NULL;
+
+		
+	}else if(strcmp(codigo, (*produtoQuatro)->codigoProduto)== 0){
+		Estoque *u = *produtoQuatro;
+		free(u);
+		*produtoQuatro = NULL;
+		
+	}
+}
+
+void displayProduto(char *codigo, Estoque  **produtoUm, Estoque **produtoDois,Estoque **produtoTres,Estoque **produtoQuatro){
+	if ((strcmp(codigo, (*produtoUm)->codigoProduto) == 0)){
+		printf("Nome", ( *produtoUm)->nomeProduto);
+		printf("codigo", ( *produtoUm)->codigoProduto);
+		printf("Quantidade", ( *produtoUm)->QuantidadeProduto);
+		printf("Preco", ( *produtoUm)->PrecoProduto);
+	}else if(strcmp(codigo, (*produtoDois)->codigoProduto)== 0){
+		printf("Nome", ( *produtoUm)->nomeProduto);
+		printf("codigo", ( *produtoUm)->codigoProduto);
+		printf("Quantidade", ( *produtoUm)->QuantidadeProduto);
+		printf("Preco", ( *produtoUm)->PrecoProduto);
+		
+	}else if(strcmp(codigo, (*produtoTres)->codigoProduto)== 0){
+		printf("Nome", ( *produtoUm)->nomeProduto);
+		printf("codigo", ( *produtoUm)->codigoProduto);
+		printf("Quantidade", ( *produtoUm)->QuantidadeProduto);
+		printf("Preco", ( *produtoUm)->PrecoProduto);
+
+		
+	}else if(strcmp(codigo, (*produtoQuatro)->codigoProduto)== 0){
+		printf("Nome", ( *produtoUm)->nomeProduto);
+		printf("codigo", ( *produtoUm)->codigoProduto);
+		printf("Quantidade", ( *produtoUm)->QuantidadeProduto);
+		printf("Preco", ( *produtoUm)->PrecoProduto);
+		
+	}
+}
+
+int main()
+{
+    double preco = 0.0;
+    int opcao = 0, quantidade = 0, escolha = 0;
+    char codigo [20];
+    char nomeProduto[50];
+    
+    Estoque *produtoUm = NULL;
+    Estoque *produtoDois = NULL;
+    Estoque *produtoTres = NULL;
+    Estoque *produtoQuatro = NULL;
+    
+    
+     do {
+        printf("\nDigite 1 para adicionar produto");
+        printf("\nDigite 2 para atualizar produto");
+        printf("\nDigite 3 para listar produtos");
+        printf("\nDigite 4 para remover produto");
+        printf("\nDigite 0 para sair\n");
+        scanf("%d", &opcao);
+        
+        switch (opcao) {
+            case 1:
+                if (produtoUm == NULL){
+                    printf("Digite o nome do produto: ");
+                    fflush(stdin);
+                    fgets(nomeProduto, 50, stdin);
+                    
+        
+                    
+                    printf("Digite a quantidade que deseja adicionar: ");
+                    fflush(stdin);
+                    scanf("%d", &quantidade);
+                    
+                    printf("Digite o preco do produto: ");
+                    fflush(stdin);
+                    scanf("%lf", &preco);
+                    
+                    printf("Digite o codigo do produto: ");
+                    fflush(stdin);
+                    scanf("%d", &codigo);
+                    
+                    produtoUm = criarProduto(nomeProduto, codigo, quantidade, preco);
+                    
+                }else if (produtoDois == NULL){
+                    printf("Digite o nome do produto");
+                    fflush(stdin);
+                    fgets(nomeProduto, 50, stdin);
+                    
+                    
+                    printf("Digite a quantidade que deseja adicionar");
+                    fflush(stdin);
+                    scanf("%d", &quantidade);
+                    
+                    printf("Digite o preco do produto");
+                    fflush(stdin);
+                    scanf("%lf", &preco);
+                    
+                    do{
+		            escolha = 0;
+		            
+                    printf("Digite o codigo do produto");
+                    fflush(stdin);
+                    fgets(codigo,20,stdin);
+                    
+                    if ( (strcmp(codigo,produtoUm->codigoProduto) == 0) || ( strcmp(codigo, produtoDois->codigoProduto) == 0 ) || (strcmp(codigo, produtoTres->codigoProduto) == 0) || ( strcmp(codigo, produtoQuatro->codigoProduto) == 0)){
+                        printf("Codigo já existente");
+                        printf("Deseja inserir novamente ? (1 apra sim) ( 0 para nao) ");
+                        fflush(stdin);
+                        scanf("%d", &escolha);
+                    }else{
+                        
+                    produtoDois = criarProduto(nomeProduto, codigo, quantidade, preco);
+                    }
+                    
+                }while(escolha != 0);
+                
+            }else if (produtoTres == NULL){
+                    printf("Digite o nome do produto");
+                    fflush(stdin);
+                    fgets(nomeProduto, 50, stdin);
+                    
+                    
+                    printf("Digite a quantidade que deseja adicionar");
+                    fflush(stdin);
+                    scanf("%d", &quantidade);
+                    
+                    printf("Digite o preco do produto");
+                    fflush(stdin);
+                    scanf("%lf", &preco);
+                    
+                    do{
+		            escolha = 0;
+                    printf("Digite o codigo do produto");
+                    fflush(stdin);
+                    fgets(codigo,20,stdin);
+                    
+                    if ( (strcmp(codigo,produtoUm->codigoProduto) == 0) || ( strcmp(codigo, produtoDois->codigoProduto) == 0 ) || (strcmp(codigo, produtoTres->codigoProduto) == 0) || ( strcmp(codigo, produtoQuatro->codigoProduto) == 0)){
+                        printf("Codigo já existente");
+                        fflush(stdin);
+                        scanf("%d", &escolha);
+                    }else{
+                        
+                    produtoTres = criarProduto(nomeProduto, codigo, quantidade, preco);
+                    }
+                }
+                    while(escolha != 0);
+                }else if (produtoQuatro == NULL){
+                	
+                    printf("Digite o nome do produto");
+                    fflush(stdin);
+                    fgets(nomeProduto, 50, stdin);
+                    
+                    
+                    printf("Digite a quantidade que deseja adicionar");
+                    fflush(stdin);
+                    scanf("%d", &quantidade);
+                    
+                    printf("Digite o preco do produto");
+                    fflush(stdin);
+                    scanf("%lf", &preco);
+                    
+                    do{
+		            escolha = 0;
+		            
+                    printf("Digite o codigo do produto");
+                    fflush(stdin);
+                    fgets(codigo,20,stdin);
+                    
+                    if ( (strcmp(codigo,produtoUm->codigoProduto) == 0) || ( strcmp(codigo, produtoDois->codigoProduto) == 0 ) || (strcmp(codigo, produtoTres->codigoProduto) == 0) || ( strcmp(codigo, produtoQuatro->codigoProduto) == 0)){
+                        printf("Codigo já existente");
+                        fflush(stdin);
+                        scanf("%d", &escolha);
+                    }else{
+                        
+                    produtoQuatro = criarProduto(nomeProduto, codigo, quantidade, preco);
+                    }
+
+                }while(escolha != 0);
+            }else{
+            	
+            	printf("Numero maximo de estoque atingido");
+			}
+                break;
+            case 2:
+            	do{
+            		escolha = 0;
+            		printf("Digite o codigo do produto que deseja atualizar");
+            		fflush(stdin);
+            		fgets(codigo,20,stdin);
+            		if ( (strcmp(codigo,produtoUm->codigoProduto) == 0) || ( strcmp(codigo, produtoDois->codigoProduto) == 0 ) || (strcmp(codigo, produtoTres->codigoProduto) == 0) || ( strcmp(codigo, produtoQuatro->codigoProduto) == 0)){
+            			printf("Digite o novo preco");
+            			scanf("%lf", &preco);
+            			printf("Digite a nova quantidade");
+            			scanf("%d", &quantidade);
+            			
+            			atualizarProduto(codigo, &produtoUm, &produtoDois, &produtoTres, &produtoQuatro,quantidade, preco);
+            			
+					}else{
+						printf("Codigo nao existente");
+                        printf("Deseja inserir novamente ? (1 apra sim) ( 0 para nao) ");
+                        fflush(stdin);
+                        scanf("%d", &escolha);
+					}
+            		
+				}while(escolha != 0);
+				
+                break;
+            case 3:
+                printf("\nPlacas que comecam com J e terminam com 0, 2, 4 ou 7:\n");
+                break;
+            case 4:
+                do{
+            		escolha = 0;
+            		printf("Digite o codigo do produto que deseja remover");
+            		fflush(stdin);
+            		fgets(codigo,20,stdin);
+            		
+            		if ( (strcmp(codigo,produtoUm->codigoProduto) == 0) || ( strcmp(codigo, produtoDois->codigoProduto) == 0 ) || (strcmp(codigo, produtoTres->codigoProduto) == 0) || ( strcmp(codigo, produtoQuatro->codigoProduto) == 0)){
+            			
+            			
+            		    removerProduto(codigo, &produtoUm, &produtoDois, &produtoTres, &produtoQuatro);
+            			
+					}else{
+						printf("Codigo nao existente");
+                        printf("Deseja inserir novamente ? (1 apra sim) ( 0 para nao) ");
+                        fflush(stdin);
+                        scanf("%d", &escolha);
+					}
+            		
+				}while(escolha != 0);
+                break;
+            case 5:
+                printf("\nDigite o chassi do veiculo para troca de proprietario: \n");
+                break;
+    }
+
+ }while (opcao != 0);
+    return 0;
+}
